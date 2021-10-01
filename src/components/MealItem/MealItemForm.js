@@ -1,30 +1,37 @@
-import React, { useContext } from 'react';
+import React, {useRef } from 'react';
 import { Fragment } from 'react/cjs/react.production.min';
-import { AddContext } from '../../store/ItemsContext';
 import Input from '../../UI/Input';
 
 import './MealItemForm.css'
 
 
 const MealItemForm = (props) => {
-  const { items } = useContext(AddContext)
-  const HandleItemCount = (e) => {
+  const amountInputRef = useRef();
+  const submitHandler = (e) => {
     e.preventDefault();
-    let item = items.itemCount + parseInt(e.target[0].value);
-    items.setItemCount(item)
-  }
+    const enteredAmount = amountInputRef.current.value;
+    const enteredAmountNumber = +enteredAmount;
+    if(enteredAmount.trim().length === 0 || enteredAmountNumber<1 || enteredAmountNumber>5)
+    {
+      return;
+    }
+    props.onAddToCart(enteredAmountNumber);
+
+  };
 
   return (
     <Fragment>
-      <form className='form' onSubmit={HandleItemCount}>
-        <Input label="Amount" input={{
+      <form className='form' onSubmit={submitHandler}>
+        <Input
+        ref ={amountInputRef}
+        label="Amount" input={{
           id: 'amount',
           type: 'number',
           min: '1',
           max: '5',
           step: '1',
           defaultValue: '1'
-        }} />
+        }}/>
 
         <button>+ ADD</button>
       </form>

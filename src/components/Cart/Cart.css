@@ -1,4 +1,4 @@
-.cart-items {
+.cartitems {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -20,6 +20,7 @@
   }
   
   .actions button {
+    display: inline;
     font: inherit;
     cursor: pointer;
     background-color: transparent;
@@ -37,7 +38,7 @@
     color: white;
   }
   
-  .actions .button--alt {
+  .actions .closebutton {
     color: #8a2b06;
   }
   

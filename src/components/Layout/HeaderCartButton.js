@@ -1,24 +1,27 @@
-import React,{useContext} from 'react';
+import React, { useContext } from 'react';
 import { FiShoppingCart } from 'react-icons/fi';
-import { AddContext} from '../../store/ItemsContext';
+import { AddContext } from '../../store/ItemsContext';
 import './HeaderCartButton.css';
 
 
 const HeaderCartButton = (props) => {
-    const {items,cart} = useContext(AddContext)
+    const ctxData = useContext(AddContext)
 
-    const showCartHandler = ()=>{
-        cart.setCartIsShown(true)
+    const showCartHandler = () => {
+        ctxData.cart[1](true)
     }
+    const numberOfCartItems = ctxData.items.reduce((curNumber, item) => {
+        return curNumber + item.amount;
+    }, 0);
 
-    return(
-    <div>
-        <button className="button" onClick={showCartHandler}>
-            <span className="icon"><FiShoppingCart /></span>
-            <span> Your Cart</span>
-            <span className="badge">{items.itemCount}</span>
-        </button>
-    </div>
+    return (
+        <div>
+            <button className="button" onClick={showCartHandler}>
+                <span className="icon"><FiShoppingCart /></span>
+                <span> Your Cart</span>
+                <span className="badge">{numberOfCartItems}</span>
+            </button>
+        </div>
     )
 }
 export default HeaderCartButton;
